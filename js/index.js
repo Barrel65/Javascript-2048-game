@@ -9,6 +9,14 @@ grid.getRandomEmptyCell().linkTile(new Tile(gameBoard));
 readKey();
 
 
+if (is_touch_device()) {
+	gameBoard.style.padding = "3vmin";
+	gameBoard.style.setProperty('--cell-size', "22vmin");
+	document.body.style.position = "fixed";
+}
+
+
+
 function readKey() {
 	if (is_touch_device()) {
 		document.addEventListener('touchstart', handleTouchStart, false);
