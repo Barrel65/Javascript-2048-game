@@ -7,6 +7,7 @@
 	--txt-lightness:50%;
 }
 
+html { overflow:  hidden; }
 
 body{
 	background-color: #333;

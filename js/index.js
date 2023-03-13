@@ -47,31 +47,31 @@ function handleTouchMove(evt) {
 
 	if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
 		if (xDiff > 0) {
-			if (!canMoveRight()) {
-				readKey();
-				return;
-			}
-			moveRight();
-		} else {
 			if (!canMoveLeft()) {
 				readKey();
 				return;
 			}
 			moveLeft();
-		}
-	} else {
-		if (yDiff > 0) {
-			if (!canMoveDown()) {
+		} else {
+			if (!canMoveRight()) {
 				readKey();
 				return;
 			}
-			moveDown();
-		} else {
+			moveRight();
+		}
+	} else {
+		if (yDiff > 0) {
 			if (!canMoveUp()) {
 				readKey();
 				return;
 			}
 			moveUp();
+		} else {
+			if (!canMoveDown()) {
+				readKey();
+				return;
+			}
+			moveDown();
 		}
 	}
 	/* reset values */
