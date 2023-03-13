@@ -53,11 +53,11 @@ function handleTouchMove(evt) {
 			}
 			moveLeft();
 		} else {
-			if (!canMoveLeft()) {
+			if (!canMoveRight()) {
 				readKey();
 				return;
 			}
-			moveLeft();
+			moveRight();
 		}
 	} else {
 		if (yDiff > 0) {
