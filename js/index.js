@@ -10,7 +10,7 @@ readKey();
 
 
 if (is_touch_device()) {
-	gameBoard.style.padding = "2vmin";
+	gameBoard.style.margin = "2vmin";
 	gameBoard.style.setProperty('--cell-size', "22vmin");
 	document.body.style.position = "fixed";
 	document.querySelector(".tile").setProperty('--cell-size', "22vmin");
