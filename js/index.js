@@ -10,10 +10,89 @@ readKey();
 
 
 function readKey() {
-	window.addEventListener("keydown", handleInput, { once: true });
+	if (is_touch_device()) {
+		document.addEventListener('touchstart', handleTouchStart, false);
+		document.addEventListener('touchmove', handleTouchMove, false);
+	} else {
+		window.addEventListener("keydown", handleInput, { once: true });
+	}
 }
 
+
+//mobile device
+var xDown = null;
+var yDown = null;
+
+function getTouches(evt) {
+	return evt.touches ||             // browser API
+		evt.originalEvent.touches; // jQuery
+}
+
+function handleTouchStart(evt) {
+	const firstTouch = getTouches(evt)[0];
+	xDown = firstTouch.clientX;
+	yDown = firstTouch.clientY;
+};
+
+function handleTouchMove(evt) {
+	if (!xDown || !yDown) {
+		return;
+	}
+
+	var xUp = evt.touches[0].clientX;
+	var yUp = evt.touches[0].clientY;
+
+	var xDiff = xDown - xUp;
+	var yDiff = yDown - yUp;
+
+	if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
+		if (xDiff > 0) {
+			if (!canMoveRight()) {
+				readKey();
+				return;
+			}
+			moveRight();
+		} else {
+			if (!canMoveLeft()) {
+				readKey();
+				return;
+			}
+			moveLeft();
+		}
+	} else {
+		if (yDiff > 0) {
+			if (!canMoveDown()) {
+				readKey();
+				return;
+			}
+			moveDown();
+		} else {
+			if (!canMoveUp()) {
+				readKey();
+				return;
+			}
+			moveUp();
+		}
+	}
+	/* reset values */
+	xDown = null;
+	yDown = null;
+
+	const newTile = new Tile(gameBoard);
+	grid.getRandomEmptyCell().linkTile(newTile);
+
+	if (!canMoveUp() && !canMoveDown() && !canMoveLeft() & !canMoveRight()) {
+		alert("Game over!");
+		return;
+	}
+
+	readKey();
+};
+
+
+//desctop device
 function handleInput(event) {
+	console.log(event.key);
 	switch (event.key) {
 		case "ArrowUp":
 			if (!canMoveUp()) {
@@ -148,4 +227,9 @@ function canMoveInGroup(group) {
 
 		return group[index - 1].canAccept(cell.linkedTile);
 	})
+}
+
+
+function is_touch_device() {
+	return !!('ontouchstart' in window);
 }
