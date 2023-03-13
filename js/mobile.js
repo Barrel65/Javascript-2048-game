@@ -1,5 +1,5 @@
 
-if (is_touch_device) {
+if (is_touch_device()) {
 	const gameBoard = document.getElementById("gameBoard");
 	gameBoard.style.padding = "3vmin";
 	gameBoard.style.setProperty('--cell-size', "22vmin");
